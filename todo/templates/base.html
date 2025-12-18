@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}My To-Do App{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== BODY & GENERAL ===== */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #fdf6ff, #fef4f0, #f2fbff);
+            color: #4f3d84;
+        }
+
+        a { text-decoration: none; }
+
+        /* ===== HEADER / NAVBAR ===== */
+        header {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid #e8dcff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .logo {
+            font-weight: 700;
+            font-size: 22px;
+            color: #6a5aa3;
+        }
+
+        header nav a {
+            margin-left: 18px;
+            font-weight: 600;
+            color: #5c4d92;
+            transition: 0.25s;
+        }
+
+        header nav a:hover {
+            color: #3d2f70;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        main.container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            border-top: 1px solid #e8dcff;
+            color: #6a5aa3;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #5c4d92;
+            margin: 0 8px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-soft {
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            color: #5c4d92;
+            background: #e8ddff;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn-soft:hover {
+            background: #d8c9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+
+        /* ===== FORM CONTAINERS ===== */
+        .form-card {
+            background: rgba(255,255,255,0.88);
+            padding: 30px;
+            border-radius: 22px;
+            border: 1px solid #e8dcff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 500px;
+            margin: auto;
+            animation: fadeSlide 0.45s ease;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🌸 My To-Do App</div>
+    <nav>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'task-list' %}">Tasks</a>
+        <a href="{% url 'category-list' %}">Categories</a>
+        <a href="{% url 'notification-list' %}">Notifications</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    &copy; 2025 My To-Do App. Made with ❤️ | 
+    <a href="#">Privacy</a> | <a href="#">Terms</a>
+</footer>
+
+</body>
+</html>

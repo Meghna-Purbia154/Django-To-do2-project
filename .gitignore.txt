@@ -1,0 +1,25 @@
+# Python cache
+*.pyc
+__pycache__/
+
+# Database
+db.sqlite3
+
+# Virtual environment
+../Lib/
+../Scripts/
+../Include/
+../pyvenv.cfg
+.env
+pass.txt
+
+# Static and media
+/staticfiles/
+media/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store

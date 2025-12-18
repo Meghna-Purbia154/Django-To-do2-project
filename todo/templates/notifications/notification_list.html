@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fefaff, #f4faff, #fff8f3);
+        font-family: "Poppins", sans-serif;
+    }
+
+    h2.page-title {
+        color: #6a5aa3;
+        font-weight: 700;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #e3d8ff;
+        display: inline-block;
+        padding-bottom: 6px;
+    }
+
+    .notif-card {
+        background: rgba(255,255,255,0.85);
+        border-radius: 18px;
+        padding: 18px;
+        margin-bottom: 15px;
+        border: 1px solid #e8dcff;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+        transition: 0.25s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .notif-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+    }
+
+    .notif-title {
+        font-weight: 600;
+        color: #4f3d84;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .notif-title:hover {
+        text-decoration: underline;
+    }
+
+    .notif-meta {
+        font-size: 12px;
+        color: #7a6f9f;
+        margin-top: 3px;
+    }
+
+    .category-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    .empty-box {
+        text-align: center;
+        padding: 25px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.75);
+        border: 1px solid #e9dcff;
+        color: #6a5aa3;
+        font-weight: 600;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+</style>
+
+<h2 class="page-title">Notifications 🌸</h2>
+
+{% if notifications %}
+    {% for notif in notifications %}
+    <div class="notif-card">
+        <div>
+            <span class="category-dot" ></span>
+            <a class="notif-title" href="{{ notif.link }}">
+                {{ notif.title }}
+            </a>
+            <div class="notif-meta">{{ notif.timestamp|date:"M d, Y H:i" }}</div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="empty-box">No notifications yet ✨</div>
+{% endif %}
+
+{% endblock %}

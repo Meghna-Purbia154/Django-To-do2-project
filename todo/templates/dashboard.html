@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fdf7ff, #fef4f0, #f2fbff);
+        font-family: "Poppins", sans-serif;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-header h2 {
+        color: #6a5aa3;
+        font-weight: 700;
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    /* ===== Stats Cards ===== */
+    .stats-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        flex: 1 1 220px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid #e8dcff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+        text-align: center;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+
+    .stat-card h3 {
+        font-size: 32px;
+        color: #5c4d92;
+        margin-bottom: 6px;
+    }
+
+    .stat-card p {
+        font-size: 14px;
+        color: #7a6f9f;
+        margin: 0;
+    }
+
+    /* ===== Task Summary ===== */
+    .task-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .task-card {
+        background: rgba(255,255,255,0.88);
+        padding: 15px 18px;
+        border-radius: 16px;
+        border: 1px solid #f0e6ff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.25s ease;
+    }
+
+    .task-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+    }
+
+    .task-title {
+        font-weight: 600;
+        color: #4f3d84;
+        font-size: 16px;
+    }
+
+    .category-pill {
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* ===== Category Widgets ===== */
+    .category-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .category-card {
+        flex: 1 1 140px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 16px;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #e8dcff;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+        transition: 0.3s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .category-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-bottom: 6px;
+    }
+
+    .category-name {
+        font-weight: 600;
+        color: #5c4d92;
+        font-size: 14px;
+    }
+
+    .category-count {
+        font-size: 12px;
+        color: #7a6f9f;
+    }
+
+    .form-card input, .form-card select, .form-card textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid #e8dcff;
+        margin-bottom: 15px;
+        font-size: 14px;
+        transition: 0.25s;
+        background: rgba(255,255,255,0.9);
+    }
+
+    .form-card input:focus, .form-card select:focus, .form-card textarea:focus {
+        border-color: #c6aaff;
+        outline: none;
+        box-shadow: 0 4px 12px rgba(198,170,255,0.3);
+    }
+
+    .form-card label {
+        font-weight: 600;
+        color: #5c4d92;
+        margin-bottom: 6px;
+        display: block;
+    }
+    /* ===== Charts Placeholder ===== */
+    .chart-card {
+        background: rgba(255,255,255,0.88);
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid #e8dcff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+        text-align: center;
+        min-height: 200px;
+        color: #5c4d92;
+    }
+
+    /* ===== Responsive ===== */
+    @media(max-width:768px){
+        .stats-row, .category-row {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="dashboard-header">
+    <h2>Hello, {{ user.username }} 🌸</h2>
+    <a href="{% url 'task-add' %}" class="btn-soft">+ Add New Task</a>
+</div>
+
+<!-- Stats Cards -->
+<div class="stats-row">
+    <div class="stat-card">
+        <h3>{{ total }}</h3>
+        <p>Total Tasks</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ completed }}</h3>
+        <p>Completed</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ overdue }}</h3>
+        <p>Overdue</p>
+    </div>
+</div>
+
+<!-- Task Summary -->
+<h3 style="color:#6a5aa3; margin-bottom:15px;">Recent Tasks 🌸</h3>
+<div class="task-summary">
+    {% for task in tasks %}
+    <div class="task-card">
+        <div class="task-title">{{ task.title }}</div>
+        {% if task.category %}
+        <span class="category-pill" >{{ task.category.name }}</span>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No tasks yet! Create one 🌸</p>
+    {% endfor %}
+</div>
+
+<!-- Category Widgets -->
+<h3 style="color:#6a5aa3; margin-bottom:15px;">Categories 💖</h3>
+<div class="category-row">
+    {% for c in categories %}
+    <div class="category-card">
+        <span class="category-dot" ></span>
+        <div class="category-name">{{ c.name }}</div>
+        <div class="category-count">{{ c.task_count }} Tasks</div>
+    </div>
+    {% empty %}
+    <p>No categories yet! Add some 🌸</p>
+    {% endfor %}
+</div>
+
+<div class="form-card">
+    <h2 style="text-align:center; color:#5c4d92; margin-bottom:20px;">
+        {% if form.instance.pk %} Edit Task {% else %} Add New Task {% endif %}
+    </h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn-soft" type="submit">
+            {% if form.instance.pk %} Update Task {% else %} Create Task {% endif %}
+        </button>
+    </form>
+
+    <p style="text-align:center; margin-top:12px; font-size:14px;">
+        <a href="{% url 'task-list' %}" style="color:#8676c3; font-weight:600;">Back to Tasks</a>
+    </p>
+</div>
+
+
+<!-- Chart Placeholder -->
+<div class="chart-card">
+    📊 Chart coming soon! (You can integrate Chart.js here)
+</div>
+
+{% endblock %}

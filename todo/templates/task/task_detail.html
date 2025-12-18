@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fdf7ff, #fef4f0, #f2fbff);
+        font-family: "Poppins", sans-serif;
+    }
+
+    .detail-card {
+        background: rgba(255,255,255,0.85);
+        padding: 30px;
+        border-radius: 22px;
+        border: 1px solid #e9dcff;
+        max-width: 700px;
+        margin: auto;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .task-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #5c4d92;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    .completed { background: #d7ffe2; color: #21844f; }
+    .overdue { background: #ffe1e1; color: #b32424; }
+    .pending { background: #fff3cd; color: #9b6d00; }
+
+    .cat-pill {
+        padding: 7px 14px;
+        border-radius: 16px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    }
+
+    .info-box {
+        background: rgba(255,255,255,0.75);
+        padding: 15px;
+        border-radius: 14px;
+        border: 1px solid #f0e6ff;
+        margin-top: 15px;
+    }
+
+    .info-box label {
+        font-weight: 600;
+        color: #5c4d92;
+    }
+
+    .notes-box {
+        background: #fcfaff;
+        border-radius: 14px;
+        padding: 18px;
+        border: 1px solid #e9dcff;
+        margin-top: 15px;
+        font-size: 15px;
+        color: #504a65;
+    }
+
+    .btn-soft {
+        padding: 8px 16px;
+        border-radius: 12px;
+        border: 1px solid #cfc3ff;
+        text-decoration: none;
+        color: #5b4fa3;
+        font-weight: 600;
+        transition: 0.3s ease;
+        margin-right: 8px;
+    }
+
+    .btn-soft:hover {
+        background: #e8ddff;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+
+    .back-link {
+        color: #7f6ac5;
+        text-decoration: none;
+        margin-bottom: 15px;
+        display: inline-block;
+        font-weight: 600;
+    }
+</style>
+
+
+<a href="{% url 'task-list' %}" class="back-link">← Back to Tasks</a>
+
+<div class="detail-card">
+
+    <h2 class="task-title">
+        {{ task.title }}
+
+        {% if task.get_status_display == "Completed" %}
+            <span class="status-badge completed">✔ Completed</span>
+        {% elif task.get_status_display == "Overdue" %}
+            <span class="status-badge overdue">⚠ Overdue</span>
+        {% else %}
+            <span class="status-badge pending">⏳ Pending</span>
+        {% endif %}
+    </h2>
+
+    {% if task.category %}
+    <p>
+        <span class="cat-pill" >
+            {{ task.category.name }}
+        </span>
+    </p>
+    {% endif %}
+
+    <div class="info-box">
+        <label>Due Date:</label> {{ task.due_date }} <br>
+        <label>Status:</label> {{ task.get_status_display }} <br>
+    </div>
+
+    {% if task.description %}
+    <div class="notes-box">
+        <strong>Notes:</strong>
+        <p>{{ task.description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="mt-3">
+        <a href="{% url 'task-edit' task.pk %}" class="btn-soft">Edit</a>
+        <a href="{% url 'task-delete' task.pk %}" class="btn-soft">Delete</a>
+    </div>
+
+</div>
+
+{% endblock %}

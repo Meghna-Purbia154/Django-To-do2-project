@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #fdf6ff, #fff8f4, #f1faff);
+        font-family: "Poppins", sans-serif;
+    }
+
+    .delete-card {
+        background: rgba(255,255,255,0.88);
+        max-width: 500px;
+        margin: 80px auto;
+        padding: 30px;
+        border-radius: 22px;
+        border: 1px solid #e8dcff;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+        text-align: center;
+        animation: fadeIn 0.45s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .delete-card h3 {
+        font-size: 24px;
+        color: #b32424;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .delete-card p {
+        color: #5c4d92;
+        margin-bottom: 25px;
+    }
+
+    .btn-soft {
+        padding: 10px 20px;
+        border-radius: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        margin: 0 8px;
+        transition: 0.3s ease;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn-cancel {
+        background: #f0e6ff;
+        color: #4f3d84;
+    }
+
+    .btn-cancel:hover {
+        background: #e0d1ff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    }
+
+    .btn-delete {
+        background: #ffd6d6;
+        color: #b32424;
+    }
+
+    .btn-delete:hover {
+        background: #ffbcbc;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    }
+
+    .warning-icon {
+        font-size: 48px;
+        color: #ff9494;
+        margin-bottom: 12px;
+    }
+
+</style>
+
+<div class="delete-card">
+    <div class="warning-icon">⚠️</div>
+    <h3>Delete Task?</h3>
+    <p>Are you sure you want to delete "<strong>{{ task.title }}</strong>"? This action cannot be undone.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn-soft btn-delete">Delete</button>
+        <a href="{% url 'task-list' %}" class="btn-soft btn-cancel">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}
